@@ -1,0 +1,135 @@
+package pilas;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class metodos {
+    Scanner sc = new Scanner(System.in);
+
+    public Stack<objRepuesto> IngresarRepuesto(Stack<objRepuesto> pila) {
+        objRepuesto o = new objRepuesto();
+        int cant = 0;
+        boolean existe = false;
+
+        System.out.println("Ingrese la marca");
+        o.setMarca(sc.next());
+        System.out.println("Ingrese la referencia");
+        String ref = sc.next();
+        if (pila.size() > 0) {
+            for (objRepuesto obj : pila) {
+                if (obj.getReferencia().equalsIgnoreCase(ref)) {
+                    System.out.println("ingrese la cantidad");
+                    cant = sc.nextInt();
+                    cant = cant + obj.getCantidad();
+                    obj.setCantidad(cant);
+                    obj.setMarca(obj.getMarca());
+                    obj.setPrecio(obj.getPrecio());
+                    existe = true;
+                }
+            }
+            if (!existe) {
+                o.setReferencia(ref);
+            }
+
+        } else {
+            o.setReferencia(ref);
+
+        }
+
+        if (!existe) {
+            System.out.println("Ingrese el precio");
+            o.setPrecio(sc.nextDouble());
+            System.out.println("ingrese la cantidad");
+            o.setCantidad(sc.nextInt());
+            pila.push(o);
+        }
+
+        return pila;
+    }
+
+    public void MostrarPila(Stack<objRepuesto> pila) {
+        for (objRepuesto o : pila) {
+            System.out.println("Marca: " + o.getMarca());
+            System.out.println("Ref : " + o.getReferencia());
+            System.out.println("Precio : " + o.getPrecio());
+            System.out.println("Cantidad: " + o.getCantidad());
+        }
+    }
+}
+
+
+
+
+
+
+
+
+package pilas;
+
+public class objRepuesto {
+ private  String Marca;
+ private String Referencia; 
+//    UUID.randomUUID().toString()
+private Double Precio;
+private int Cantidad;
+public objRepuesto() {
+}
+public String getMarca() {
+    return Marca;
+}
+public void setMarca(String marca) {
+    Marca = marca;
+}
+public String getReferencia() {
+    return Referencia;
+}
+public void setReferencia(String referencia) {
+    Referencia = referencia;
+}
+public Double getPrecio() {
+    return Precio;
+}
+public void setPrecio(Double precio) {
+    Precio = precio;
+}
+public int getCantidad() {
+    return Cantidad;
+}
+public void setCantidad(int cantidad) {
+    Cantidad = cantidad;
+}
+
+
+}
+package pilas;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class menu {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        metodos m = new metodos();
+        boolean bandera = true;
+        Stack<objRepuesto> pila = new Stack<>();
+        int opt = 0;
+        while (bandera) {
+            System.out.println("ingrese la opcion");
+            opt = sc.nextInt();
+            switch (opt) {
+                case 1:
+                    pila = m.IngresarRepuesto(pila);
+                    break;
+                case 2:
+                    m.MostrarPila(pila);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+}
+
